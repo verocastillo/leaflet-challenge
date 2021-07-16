@@ -14,3 +14,20 @@ L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
   accessToken: API_KEY
 }).addTo(myMap);
 
+// Data source URL
+var eqURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
+
+// Color function for markers
+function getColor(x) {
+    if (x < 1) { return "Maroon";}
+    if (x < 2.5) {return "Sienna"}
+    if (x < 4) {return "OrangeRed"}
+    if (x < 5.5) {return "Orange"}
+    if (x < 7) {return "Gold"}
+};
+
+// Size function for markers
+function mSize(x) {
+    return x * 3 ;
+};
+
