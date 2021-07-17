@@ -45,6 +45,12 @@ info.update = function (props) {
 };
 info.addTo(myMap);
 
+// loading GeoJSON file - Here my html and usa_adm.geojson file resides in same folder
+$.getJSON("boundaries.geojson",function(data){
+    // L.geoJson function is used to parse geojson file and load on to map
+    L.geoJson(data).addTo(myMap);
+    });
+
 // Data source URL
 var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
