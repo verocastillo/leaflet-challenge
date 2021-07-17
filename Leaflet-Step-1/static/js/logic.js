@@ -1,7 +1,7 @@
 // Creating map object
 var myMap = L.map("map", {
-    center: [38.5522, -100.2437],
-    zoom: 5
+    center: [0, -10],
+    zoom: 2
   });
 
 // Adding tile layer
@@ -34,14 +34,13 @@ function getMap(data) {
     })}
     // Check dictionary
     console.log(earthquakeinfo)
-    console.log(typeof earthquakeinfo[0].magnitude)
     // Add markers
     for (var i = 0; i < earthquakeinfo.length; i++) {
         L.circleMarker([earthquakeinfo[i].latitude, earthquakeinfo[i].longitude], {
-            color: "black",
-            fillColor: getColor(earthquakeinfo[0].magitude),
+            color: getColor(earthquakeinfo[i].magnitude),
+            fillColor: getColor(earthquakeinfo[i].magnitude),
             fillOpacity: 0.8,
-            radius: earthquakeinfo[0].magnitude * 2.5
+            radius: earthquakeinfo[i].magnitude * 2.5
         }).addTo(myMap);
       }
       return false;
@@ -49,13 +48,25 @@ function getMap(data) {
 }
 
 // Color function for markers
-function getColor(magnitude) {
-    if (magnitude < 1.2) {return "maroon";}
-    if (magnitude < 2.4) {return "brickred"}
-    if (magnitude < 3.6) {return "orangered"}
-    if (magnitude < 4.8) {return "orange"}
-    if (magnitude < 6.0) {return "old"}
+function getColor(mag) {
+    if (mag >= 5) {
+        return "Maroon";
+    }
+    if (mag < 5 && mag >=  4) {
+        return "FireBrick";
+    }
+    if (mag < 4 && mag >= 3) {
+        return "OrangeRed";
+    }
+    if (mag < 3 && mag >= 2) {
+        return "Orange";
+    }
+    if (mag < 2 && mag > 1) {
+        return "Gold";
+    }
+    if (mag < 1) {
+        return "Yellow";
+    }
 };
-
 
 
