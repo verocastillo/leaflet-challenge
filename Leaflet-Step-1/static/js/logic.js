@@ -31,3 +31,16 @@ function mSize(x) {
     return x * 3 ;
 };
 
+// Marker function
+function createMarkers(data,x) {
+    var markerchars = {
+        radius: mSize(data.properties.mag),
+        fillColor: getColor(data.properties.mag),
+        color: "red",
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 0.70
+    }
+    return L.circleMaker(x,markerchars);
+};
+
