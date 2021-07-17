@@ -10,7 +10,7 @@ L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
   tileSize: 512,
   maxZoom: 18,
   zoomOffset: -1,
-  id: "mapbox/streets-v11",
+  id: "mapbox/light-v10",
   accessToken: API_KEY
 }).addTo(myMap);
 
@@ -18,8 +18,8 @@ L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 var legend = L.control({position: 'bottomright'});
 legend.onAdd = function (myMap) {
     var div = L.DomUtil.create('div', 'info legend'),
-    labels = ['<strong>Magnitude</strong><br>'],
-    grades = [0, 1, 2, 3, 4, 5];
+    labels = ['<strong>Earthquake Depth</strong><br>'],
+    grades = [0, 10, 20, 30, 40, 50];
     // loop through our density intervals and generate a label with a colored square for each interval
     for (var i = 0; i < grades.length; i++) {
         div.innerHTML +=
@@ -41,7 +41,7 @@ info.onAdd = function (myMap) {
 };
 // method that we will use to update the control based on feature properties passed
 info.update = function (props) {
-    this._div.innerHTML = '<h4>All Earthquakes Over The Past 7 Days</h4>';
+    this._div.innerHTML = '<h4>All Earthquakes Over The Past 7 Days</h4>Magnitude is reflected on marker size';
 };
 info.addTo(myMap);
 
@@ -62,16 +62,17 @@ function getMap(data) {
         longitude: data[i].geometry.coordinates[0],
         latitude: data[i].geometry.coordinates[1],
         magnitude: data[i].properties.mag,
+        depth: data[i].geometry.coordinates[2]
     })}
     // Check dictionary
     console.log(earthquakeinfo)
     // Add markers
     for (var i = 0; i < earthquakeinfo.length; i++) {
         L.circleMarker([earthquakeinfo[i].latitude, earthquakeinfo[i].longitude], {
-            color: getColor(earthquakeinfo[i].magnitude),
-            fillColor: getColor(earthquakeinfo[i].magnitude),
+            color: getColor(earthquakeinfo[i].depth),
+            fillColor: getColor(earthquakeinfo[i].depth),
             fillOpacity: 0.8,
-            radius: earthquakeinfo[i].magnitude * 2.5
+            radius: earthquakeinfo[i].magnitude * 3.5
         }).addTo(myMap);
       }
       return false;
@@ -79,22 +80,22 @@ function getMap(data) {
 
 // Color function for markers
 function getColor(mag) {
-    if (mag >= 5) {
+    if (mag >= 50) {
         return "maroon";
     }
-    if (mag < 5 && mag >=  4) {
+    if (mag < 50 && mag >=  40) {
         return "firebrick";
     }
-    if (mag < 4 && mag >= 3) {
+    if (mag < 40 && mag >= 30) {
         return "orangered";
     }
-    if (mag < 3 && mag >= 2) {
+    if (mag < 30 && mag >= 20) {
         return "orange";
     }
-    if (mag < 2 && mag >= 1) {
+    if (mag < 20 && mag >= 10) {
         return "gold";
     }
-    if (mag < 1) {
+    if (mag < 10) {
         return "yellow";
     }
 }
