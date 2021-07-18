@@ -67,15 +67,16 @@ function getMap(data) {
     // Check dictionary
     console.log(earthquakeinfo)
     // Add markers
-    for (var i = 0; i < earthquakeinfo.length; i++) {
-        L.circleMarker([earthquakeinfo[i].latitude, earthquakeinfo[i].longitude], {
-            color: getColor(earthquakeinfo[i].depth),
-            fillColor: getColor(earthquakeinfo[i].depth),
-            fillOpacity: 0.8,
-            radius: earthquakeinfo[i].magnitude * 3.5
-        }).addTo(myMap);
-      }
-      return false;
+    for (var i = 0; i < earthquakeinfo.length; i++) { 
+        var popupContent = " Earthquake Coordinates: " + earthquakeinfo[i].latitude + "," + earthquakeinfo[i].longitude;         
+        L.circleMarker([earthquakeinfo[i].latitude, earthquakeinfo[i].longitude], {             
+            color: getColor(earthquakeinfo[i].depth),             
+            fillColor: getColor(earthquakeinfo[i].depth),             
+            fillOpacity: 0.8,             
+            radius: earthquakeinfo[i].magnitude * 3.5         
+        }).addTo(myMap).bindPopup(popupContent);       
+    }       
+    return false;
 }
 
 // Color function for markers
